@@ -131,5 +131,21 @@ if file:
             ax = sns.heatmap(user_heatmap)
             st.pyplot(fig)
 
+            # sentiment analysis
+            messages = df['Message'].tolist()
+
+            sentiment_scores = preprocess.preprocess_and_analyze_sentiment(
+                messages)
+            average_score, positive_messages, negative_messages, neutral_messages = preprocess.analyze_sentiment_scores(
+                sentiment_scores, messages)
+            # Display sentiment analysis results
+            st.title('Sentiment Analysis of WhatsApp Chat')
+            st.write('**Average Sentiment Score:**', average_score)
+            st.write('**Number of Positive Messages:**',
+                     len(positive_messages))
+            st.write('**Number of Negative Messages:**',
+                     len(negative_messages))
+            st.write('**Number of Neutral Messages:**', len(neutral_messages))
+
     except Exception as e:
         st.subheader("Unable to Process Your Request")

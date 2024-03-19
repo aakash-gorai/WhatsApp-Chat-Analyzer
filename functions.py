@@ -147,3 +147,19 @@ def create_wordcloud(df):
     df['Message'] = df['Message'].apply(remove_stop_words)
     df_wc = wc.generate(df['Message'].str.cat(sep=" "))  # creates word cloud
     return df_wc
+
+
+def analyze_sentiment_trends(sentiment_scores,messages):
+
+    # Calculate average sentiment score
+    average_score = sum(sentiment_scores) / len(sentiment_scores)
+
+    # Categorize messages based on sentiment
+    positive_messages = [message for message, score in zip(
+        messages, sentiment_scores) if score > 0]
+    negative_messages = [message for message, score in zip(
+        messages, sentiment_scores) if score < 0]
+    neutral_messages = [message for message, score in zip(
+        messages, sentiment_scores) if score == 0]
+
+    return average_score, positive_messages, negative_messages, neutral_messages
